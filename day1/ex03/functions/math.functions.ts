@@ -1,0 +1,26 @@
+export function add(a: number, b: number): number {
+    return a + b;
+}
+
+export function subtract(a: number, b: number): number {
+    return a - b;
+}
+
+export function multiply(a: number, b: number): number {
+    return a * b;
+}
+
+export function divide(a: number, b: number): number {
+    if (b === 0) {
+        throw new Error("Division by zero");
+    }
+    return a / b;
+}
+
+export function parseNumber(token: string): number {
+    const num = parseFloat(token);
+    if (isNaN(num)) {
+        throw new Error("Invalid number: " + token);
+    }
+    return num;
+}
