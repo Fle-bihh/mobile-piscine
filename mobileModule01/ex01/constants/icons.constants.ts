@@ -1,4 +1,3 @@
-// export const EAppIcons:
 export enum EAppIcons {
 	Today = "today",
 	Currently = "currently",
