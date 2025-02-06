@@ -24,7 +24,7 @@ export default function WeatherPageScreen({
 		if (currentPosition)
 			fetchWeather(currentPosition[0].latitude, currentPosition[0].longitude);
 		else clearWeather();
-	}, [currentPosition, fetchWeather, clearWeather]);
+	}, [currentPosition, fetchWeather]);
 
 	const Content = () => (
 		<>
