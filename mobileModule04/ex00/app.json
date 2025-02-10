@@ -1,26 +1,27 @@
 {
 	"expo": {
-		"name": "dairy_app",
-		"slug": "dairy_app",
+		"name": "diary-app",
+		"slug": "diary-app",
 		"version": "1.0.0",
 		"orientation": "portrait",
-		"icon": "./assets/images/icon.png",
-		"scheme": "myapp",
+		"icon": "./sources/assets/images/icon.png",
+		"scheme": "diary-app",
 		"userInterfaceStyle": "automatic",
 		"newArchEnabled": true,
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.fle-biha.diary-app"
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/images/icon.png",
+				"foregroundImage": "./sources/assets/images/icon.png",
 				"backgroundColor": "#ffffff"
 			}
 		},
 		"web": {
 			"bundler": "metro",
 			"output": "static",
-			"favicon": "./assets/images/icon.png"
+			"favicon": "./sources/assets/images/icon.png"
 		},
 		"experiments": {
 			"typedRoutes": true

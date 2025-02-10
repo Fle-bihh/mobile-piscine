@@ -1,32 +1,35 @@
-import { Link, Stack } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import { Stack } from "expo-router";
+import { StyleSheet } from "react-native";
 
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from "@/components/themed/ThemedText.component";
+import { ThemedView } from "@/components/themed/ThemedView.component";
+import { EPalette } from "@/constants/Colors.constants";
+import SystemButton from "@/components/buttons/SystemButton.component";
+import routing from "@/functions/Routing.functions";
+import { ERoutes } from "@/constants/Routes.constants";
 
 export default function NotFoundScreen() {
-  return (
-    <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <ThemedView style={styles.container}>
-        <ThemedText type="title">This screen doesn't exist.</ThemedText>
-        <Link href="/" style={styles.link}>
-          <ThemedText type="link">Go to home screen!</ThemedText>
-        </Link>
-      </ThemedView>
-    </>
-  );
+	const title = "This screen doesn't exist.";
+	const buttonTitle = "Go home";
+	function onPress() {
+		routing.replace(ERoutes.Entry);
+	}
+	return (
+		<>
+			<Stack.Screen options={{ title: "Oops!" }} />
+			<ThemedView style={styles.container}>
+				<ThemedText>{title}</ThemedText>
+				<SystemButton onPress={onPress} title={buttonTitle} />
+			</ThemedView>
+		</>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		gap: 16,
+	},
 });

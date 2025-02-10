@@ -3,10 +3,10 @@ import { StyleSheet } from "react-native";
 import { ThemedText } from "@/components/themed/ThemedText.component";
 import { ThemedView } from "@/components/themed/ThemedView.component";
 
-export default function ExploreView() {
+export default function HomeView() {
 	return (
 		<ThemedView style={styles.container}>
-			<ThemedText style={styles.title}>Tab Two</ThemedText>
+			<ThemedText style={styles.title}>Tab One</ThemedText>
 		</ThemedView>
 	);
 }
