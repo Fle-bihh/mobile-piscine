@@ -3,10 +3,8 @@ import React from "react";
 import { ThemedView } from "@/components/themed/ThemedView.component";
 import { ThemedText } from "@/components/themed/ThemedText.component";
 import * as Google from "expo-auth-session/providers/google";
-import * as AuthSession from "expo-auth-session";
 
 import LoginButton from "@/components/buttons/LoginButton.component";
-import FirebaseService from "@/services/firebase.service";
 
 import * as WebBrowser from "expo-web-browser";
 

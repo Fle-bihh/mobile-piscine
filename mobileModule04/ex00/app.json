@@ -10,13 +10,14 @@
 		"newArchEnabled": true,
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.fle-biha.diary-app"
+			"bundleIdentifier": "com.flebiha.diaryapp"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./sources/assets/images/icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"package": "com.flebiha.diaryapp"
 		},
 		"web": {
 			"bundler": "metro",

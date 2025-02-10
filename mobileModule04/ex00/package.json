@@ -3,7 +3,10 @@
 	"main": "expo-router/entry",
 	"version": "1.0.0",
 	"scripts": {
-		"start": "expo start --tunnel"
+		"start": "expo start --tunnel",
+		"prebuild:ios": "expo prebuild --template https://github.com/expo/expo/tree/main/templates/expo-template-bare-minimum -p ios",
+		"android": "expo run:android",
+		"ios": "expo run:ios"
 	},
 	"dependencies": {
 		"@expo/vector-icons": "^14.0.2",
@@ -11,7 +14,8 @@
 		"@react-navigation/bottom-tabs": "^7.2.0",
 		"@react-navigation/native": "^7.0.14",
 		"expo": "~52.0.31",
-		"expo-auth-session": "~6.0.3",
+		"expo-application": "~6.0.2",
+		"expo-auth-session": "6.0.3",
 		"expo-blur": "~14.0.3",
 		"expo-constants": "~17.0.5",
 		"expo-crypto": "~14.0.2",
@@ -22,6 +26,7 @@
 		"expo-splash-screen": "~0.29.21",
 		"expo-status-bar": "~2.0.1",
 		"expo-system-ui": "~4.0.8",
+		"expo-web-browser": "~14.0.1",
 		"firebase": "^11.3.0",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
