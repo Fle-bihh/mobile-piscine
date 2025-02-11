@@ -55,6 +55,5 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		backgroundColor: "transparent",
-		padding: 16,
 	},
 });

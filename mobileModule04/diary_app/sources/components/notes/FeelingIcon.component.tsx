@@ -1,7 +1,7 @@
-import { Ionicons } from "@expo/vector-icons";
-import React, { useMemo } from "react";
+import React from "react";
 import { EFeeling } from "@/types/Notes.types";
-import { FeelingsColors, FeelingsIcons } from "@/constants/Feelings.constants";
+import { FeelingsEmojis } from "@/constants/Feelings.constants";
+import { ThemedText } from "../themed/ThemedText.component";
 
 interface FeelingIconProps {
 	feeling: EFeeling;
@@ -9,7 +9,5 @@ interface FeelingIconProps {
 }
 
 export default function FeelingIcon({ feeling, size = 24 }: FeelingIconProps) {
-	const iconName = useMemo(() => FeelingsIcons[feeling], [feeling]);
-	const iconColor = useMemo(() => FeelingsColors[feeling], [feeling]);
-	return <Ionicons name={iconName} size={size} color={iconColor} />;
+	return <ThemedText style={{ fontSize: size }}>{FeelingsEmojis[feeling]}</ThemedText>;
 }

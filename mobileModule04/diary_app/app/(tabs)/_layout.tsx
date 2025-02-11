@@ -5,6 +5,8 @@ import { useThemeColor } from "@/hooks/useThemeColor.hook";
 import { useAuthContext } from "@/contexts/auth.context";
 import routing, { getHrefFromRoute } from "@/functions/Routing.functions";
 import { ERoutes } from "@/constants/Routes.constants";
+import { layoutDefaultStyle } from "@/constants/Style.constants";
+import { EFonts } from "@/constants/Fonts.constants";
 
 export default function TabLayout() {
 	const { user } = useAuthContext();
@@ -17,7 +19,7 @@ export default function TabLayout() {
 			screenOptions={{
 				tabBarActiveTintColor,
 				tabBarInactiveTintColor,
-				headerShown: false,
+				...layoutDefaultStyle,
 			}}
 		>
 			<Tabs.Screen

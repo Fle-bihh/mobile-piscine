@@ -16,8 +16,10 @@ export default function LoginView() {
 		<>
 			{error && <ThemedText style={styles.error}>{error}</ThemedText>}
 			<ThemedText style={styles.title}>{TITLE}</ThemedText>
-			<LoginButton type="github" onPress={signInWithGithub} />
-			<LoginButton type="google" onPress={signInWithGoogle} />
+			<ThemedView style={styles.buttonsContainer}>
+				<LoginButton type="github" onPress={signInWithGithub} />
+				<LoginButton type="google" onPress={signInWithGoogle} />
+			</ThemedView>
 		</>
 	);
 
@@ -29,9 +31,10 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		flex: 1,
-		gap: 16,
+		gap: 32,
 		padding: 16,
 	},
+	buttonsContainer: { gap: 16 },
 	title: {
 		fontSize: 24,
 	},

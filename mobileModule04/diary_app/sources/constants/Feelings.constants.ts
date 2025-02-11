@@ -1,14 +1,4 @@
-import { TIonicon } from "@/types/Ionicons.types";
 import { EFeeling } from "@/types/Notes.types";
-
-export const FeelingsIcons: Record<EFeeling, TIonicon> = {
-	[EFeeling.Satisfied]: "happy-outline",
-	[EFeeling.Happy]: "happy",
-	[EFeeling.Neutral]: "remove-circle-outline",
-	[EFeeling.Frustrated]: "sad-outline",
-	[EFeeling.Stressed]: "alert-circle-outline",
-	[EFeeling.Excited]: "rocket-outline",
-};
 
 export const FeelingsColors: Record<EFeeling, string> = {
 	[EFeeling.Satisfied]: "#4CAF50",
@@ -26,4 +16,13 @@ export const FeelingsLabels: Record<EFeeling, string> = {
 	[EFeeling.Frustrated]: "Frustrated",
 	[EFeeling.Stressed]: "Stressed",
 	[EFeeling.Excited]: "Excited",
+};
+
+export const FeelingsEmojis: Record<EFeeling, string> = {
+	[EFeeling.Satisfied]: "😌",
+	[EFeeling.Happy]: "😁",
+	[EFeeling.Neutral]: "😶",
+	[EFeeling.Frustrated]: "😤",
+	[EFeeling.Stressed]: "🥵",
+	[EFeeling.Excited]: "🤩",
 };

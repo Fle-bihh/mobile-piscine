@@ -48,7 +48,7 @@ function useLoginButtonStyles(type: TAuthProviders) {
 			alignItems: "center",
 			display: "flex",
 			flexDirection: "row",
-			borderRadius: 4,
+			borderRadius: 8,
 		},
 		title: {
 			fontSize: iconSize,

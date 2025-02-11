@@ -10,23 +10,17 @@ import { useColorScheme } from "@/hooks/useColorScheme.hook";
 import { ServicesProvider } from "@/contexts/services.context";
 import { AuthProvider, useAuthContext } from "@/contexts/auth.context";
 import { ThemedView } from "@/components/themed/ThemedView.component";
-import { ThemedText } from "@/components/themed/ThemedText.component";
-import { ThemedSafeAreaView } from "@/components/themed/ThemedSafeAreaView.component";
 import { NotesProvider } from "@/contexts/notes.context";
+import { layoutDefaultStyle } from "@/constants/Style.constants";
+import { NativeStackNavigationOptions } from "@/types/ExpoRouter.types";
 
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
 	const { user } = useAuthContext();
 	return (
-		<ThemedSafeAreaView style={{ flex: 1 }}>
-			<ThemedView>
-				<ThemedText>{`Authentified: ${!!user}${
-					user ? ` | ${user.displayName}` : ""
-				}`}</ThemedText>
-			</ThemedView>
-
-			<Stack>
+		<ThemedView style={{ flex: 1 }}>
+			<Stack screenOptions={{ ...(layoutDefaultStyle as NativeStackNavigationOptions) }}>
 				<Stack.Screen name="(entry)" options={{ headerShown: false }} />
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen
@@ -35,7 +29,7 @@ const App = () => {
 				/>
 				<Stack.Screen name="+not-found" />
 			</Stack>
-		</ThemedSafeAreaView>
+		</ThemedView>
 	);
 };
 

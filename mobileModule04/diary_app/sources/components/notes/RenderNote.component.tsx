@@ -1,4 +1,4 @@
-import { Button, ListRenderItemInfo, StyleSheet } from "react-native";
+import { Button, ListRenderItemInfo, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
 import { INote } from "@/types/Notes.types";
 import { Collapsible } from "../ui/Collapsible.component";
@@ -24,11 +24,13 @@ const RenderNote = ({ item }: RenderNoteProps) => {
 
 	const NoteHeader = () => (
 		<ThemedView style={styles.headerContainer}>
-			<FeelingIcon feeling={item.feeling} />
-			<ThemedText style={styles.date}>
-				<ThemedText style={styles.title}>{item.title}</ThemedText>
-				{` - ${new Date(item.date).toLocaleDateString()}`}
-			</ThemedText>
+			<ThemedView style={styles.headerTopContainer}>
+				<FeelingIcon feeling={item.feeling} />
+				<ThemedText style={styles.date}>
+					{new Date(item.date).toLocaleDateString()}
+				</ThemedText>
+			</ThemedView>
+			<ThemedText style={styles.title}>{item.title}</ThemedText>
 		</ThemedView>
 	);
 
@@ -51,24 +53,27 @@ const RenderNote = ({ item }: RenderNoteProps) => {
 
 const useStyles = () => {
 	const colors = useThemeColors();
+	const { width } = useWindowDimensions();
 	const styles = StyleSheet.create({
 		container: {
 			backgroundColor: colors.backgroundSecondary,
-			padding: 8,
-			borderRadius: 16,
-			gap: 8,
+			borderRadius: 8,
+			padding: 16,
+			gap: 16,
 		},
 		contentContainer: {
 			gap: 16,
 		},
 		headerContainer: {
+			backgroundColor: "transparent",
+			width: width - 32 - 32,
+		},
+		headerTopContainer: {
 			display: "flex",
+			backgroundColor: "transparent",
 			flexDirection: "row",
 			alignItems: "center",
 			gap: 8,
-			flex: 1,
-			padding: 8,
-			backgroundColor: "transparent",
 		},
 		title: {
 			fontSize: 16,

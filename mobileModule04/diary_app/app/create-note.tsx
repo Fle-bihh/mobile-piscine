@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { useEffect, useMemo, useState } from "react";
+import { Keyboard, Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Redirect } from "expo-router";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useNotesContext } from "@/contexts/notes.context";
 import { INoteBase, EFeeling } from "@/types/Notes.types";
-import { ThemedView } from "@/components/themed/ThemedView.component";
 import { ThemedText } from "@/components/themed/ThemedText.component";
 import { Picker } from "@react-native-picker/picker";
 import { ThemedTextInput } from "@/components/themed/ThemedTextInput.component";
@@ -13,12 +12,16 @@ import Error from "@/components/ui/Error.component";
 import SystemButton from "@/components/buttons/SystemButton.component";
 import { ERoutes } from "@/constants/Routes.constants";
 import { FeelingsLabels } from "@/constants/Feelings.constants";
+import Input from "@/components/ui/Input.component";
+import { validateNote } from "@/functions/Notes.functions";
+import { ThemedScrollView } from "@/components/themed/ThemedScrollView.component";
 
 export default function CreateNoteView() {
 	const { user } = useAuthContext();
 	const { createNote, loading, error: serviceError } = useNotesContext();
 
 	const [error, setError] = useState(serviceError);
+	useEffect(() => setError(serviceError), [serviceError]);
 
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
@@ -26,77 +29,91 @@ export default function CreateNoteView() {
 
 	const handleCreateNote = async () => {
 		if (!user) return;
-		if (!title.trim() || !content.trim() || !feeling) {
-			setError("Please fill all the fields to create the note.");
+
+		const errorMessage = validateNote(title, content, feeling);
+		if (errorMessage) {
+			setError(errorMessage);
 			return;
 		}
 
 		const newNote: INoteBase = {
 			userId: user.uid,
 			date: Date.now(),
-			title,
+			title: title.trim(),
 			feeling,
-			content,
+			content: content.trim(),
 		};
 
 		await createNote(newNote);
 		routing.back();
 	};
 
-	if (!routing.canGoBack()) return <Redirect href={getHrefFromRoute(ERoutes.Home)} />;
-	return (
-		<ThemedView style={styles.container}>
-			<ThemedText style={styles.title}>Create Note</ThemedText>
+	const InputView = useMemo(
+		() => (
+			<ThemedScrollView contentContainerStyle={styles.container}>
+				<ThemedText style={styles.title}>Create Note</ThemedText>
 
-			<View style={styles.inputContainer}>
-				<ThemedText style={styles.label}>Title</ThemedText>
-				<ThemedTextInput
-					value={title}
-					onChangeText={setTitle}
-					placeholder="Enter title"
-					style={styles.input}
-				/>
-			</View>
+				<Input title="Title:">
+					<ThemedTextInput
+						value={title}
+						onChangeText={setTitle}
+						placeholder="Enter title"
+						style={styles.input}
+					/>
+				</Input>
 
-			<View style={styles.inputContainer}>
-				<ThemedText style={styles.label}>Content</ThemedText>
-				<ThemedTextInput
-					value={content}
-					onChangeText={setContent}
-					placeholder="Enter content"
-					multiline
-					style={[styles.input, styles.textArea]}
-				/>
-			</View>
+				<Input title="Content:">
+					<ThemedTextInput
+						value={content}
+						onChangeText={setContent}
+						placeholder="Enter content"
+						multiline
+						style={[styles.input, styles.textArea]}
+					/>
+				</Input>
 
-			<View style={styles.inputContainer}>
-				<ThemedText style={styles.label}>Feeling</ThemedText>
-				<Picker
-					selectedValue={feeling}
-					onValueChange={(itemValue) => setFeeling(itemValue)}
-					style={styles.picker}
-				>
-					{Object.values(EFeeling).map((feeling) => (
+				<Input title="Feeling:">
+					<Picker
+						selectedValue={feeling}
+						onValueChange={(itemValue) => setFeeling(itemValue)}
+						style={styles.picker}
+					>
 						<Picker.Item
-							key={feeling}
-							label={FeelingsLabels[feeling]}
-							value={feeling}
+							key={"default"}
+							label="How are you feeling ?"
+							value={"default"}
 						/>
-					))}
-				</Picker>
-			</View>
+						{Object.values(EFeeling).map((feeling) => (
+							<Picker.Item
+								key={feeling}
+								label={FeelingsLabels[feeling]}
+								value={feeling}
+							/>
+						))}
+					</Picker>
+				</Input>
 
-			<SystemButton title="Save Note" onPress={handleCreateNote} disabled={loading} />
-			{error && <Error error={error} />}
-		</ThemedView>
+				<SystemButton title="Save Note" onPress={handleCreateNote} disabled={loading} />
+				{error && <Error error={error} />}
+			</ThemedScrollView>
+		),
+		[title, content, feeling, error, loading]
+	);
+
+	if (!routing.canGoBack()) return <Redirect href={getHrefFromRoute(ERoutes.Home)} />;
+	if (Platform.OS === "web") return InputView;
+	return (
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			{InputView}
+		</TouchableWithoutFeedback>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: { padding: 20, gap: 16 },
+	container: { padding: 20, gap: 16, flex: 1 },
 	title: { fontSize: 24 },
-	inputContainer: { gap: 5 }, // Small gap between title and input
-	label: { fontSize: 16, fontWeight: "500" }, // Style for the label
+	inputContainer: { gap: 5 },
+	label: { fontSize: 16, fontWeight: "500" },
 	input: { borderWidth: 1, padding: 10, borderRadius: 5 },
 	textArea: { height: 100, textAlignVertical: "top" },
 	picker: {},
