@@ -1,31 +1,39 @@
 {
-	"expo": {
-		"name": "diary-app",
-		"slug": "diary-app",
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./sources/assets/images/icon.png",
-		"scheme": "diary-app",
-		"userInterfaceStyle": "automatic",
-		"newArchEnabled": true,
-		"ios": {
-			"supportsTablet": true,
-			"bundleIdentifier": "com.flebiha.diaryapp"
-		},
-		"android": {
-			"adaptiveIcon": {
-				"foregroundImage": "./sources/assets/images/icon.png",
-				"backgroundColor": "#ffffff"
-			},
-			"package": "com.flebiha.diaryapp"
-		},
-		"web": {
-			"bundler": "metro",
-			"output": "static",
-			"favicon": "./sources/assets/images/icon.png"
-		},
-		"experiments": {
-			"typedRoutes": true
-		}
-	}
+  "expo": {
+    "name": "diary-app",
+    "slug": "diary-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./sources/assets/images/icon.png",
+    "scheme": "diary-app",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.flebiha.diaryapp",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./sources/assets/images/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.flebiha.diaryapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./sources/assets/images/icon.png"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d903923f-e13a-4ec0-9ace-22fe4c487fa2"
+      }
+    }
+  }
 }

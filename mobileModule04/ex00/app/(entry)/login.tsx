@@ -1,35 +1,27 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { ThemedView } from "@/components/themed/ThemedView.component";
 import { ThemedText } from "@/components/themed/ThemedText.component";
-import * as Google from "expo-auth-session/providers/google";
-
 import LoginButton from "@/components/buttons/LoginButton.component";
+import { useAuthContext } from "@/contexts/auth.context";
+import Loader from "@/components/ui/Loader.component";
+import { EPalette } from "@/constants/Colors.constants";
 
-import * as WebBrowser from "expo-web-browser";
-
-WebBrowser.maybeCompleteAuthSession();
+const TITLE = "Login with one of the providers";
 
 export default function LoginView() {
-	const title = "Login with one of the providers";
-	const onPressGoogle = () => {
-		promptAsync();
-	};
+	const { signInWithGoogle, signInWithGithub, loading, error } = useAuthContext();
 
-	const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-		iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
-		webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-		scopes: ["profile", "email"],
-		selectAccount: true,
-	});
-
-	return (
-		<ThemedView style={styles.container}>
-			<ThemedText style={styles.title}>{title}</ThemedText>
-			<LoginButton type="github" onPress={() => {}} />
-			<LoginButton type="google" onPress={onPressGoogle} />
-		</ThemedView>
+	const AuthContent = (
+		<>
+			{error && <ThemedText style={styles.error}>{error}</ThemedText>}
+			<ThemedText style={styles.title}>{TITLE}</ThemedText>
+			<LoginButton type="github" onPress={signInWithGithub} />
+			<LoginButton type="google" onPress={signInWithGoogle} />
+		</>
 	);
+
+	return <ThemedView style={styles.container}>{loading ? <Loader /> : AuthContent}</ThemedView>;
 }
 
 const styles = StyleSheet.create({
@@ -42,5 +34,9 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 24,
+	},
+	error: {
+		color: EPalette.Error,
+		textAlign: "center",
 	},
 });

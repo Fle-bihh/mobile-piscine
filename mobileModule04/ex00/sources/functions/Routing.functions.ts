@@ -2,7 +2,7 @@ import { ERoutes } from "@/constants/Routes.constants";
 import { Href, router } from "expo-router";
 import { NavigationOptions } from "expo-router/build/global-state/routing";
 
-function getHref(route: ERoutes): Href {
+export function getHrefFromRoute(route: ERoutes): Href {
 	switch (route) {
 		case ERoutes.Entry:
 			return "/";
@@ -16,12 +16,12 @@ function getHref(route: ERoutes): Href {
 }
 
 function push(route: ERoutes, options?: NavigationOptions) {
-	const href = getHref(route);
+	const href = getHrefFromRoute(route);
 	router.push(href, options);
 }
 
 function replace(route: ERoutes, options?: NavigationOptions) {
-	const href = getHref(route);
+	const href = getHrefFromRoute(route);
 	router.replace(href, options);
 }
 

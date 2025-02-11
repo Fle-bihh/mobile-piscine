@@ -13,7 +13,6 @@ interface LoginButtonProps {
 	onPress: () => void;
 }
 export default function LoginButton({ onPress, type }: LoginButtonProps) {
-	console.log("[LoginButton] - [render]");
 	const { styles, iconColor, iconSize, iconName } = useLoginButtonStyles(type);
 
 	const providerTitle = useMemo(() => {
@@ -36,7 +35,6 @@ function useLoginButtonStyles(type: TAuthProviders) {
 	const iconColor = colors.text;
 
 	const iconName = useMemo(() => {
-		console.log("[useLoginButtonStyles] - [iconName] - ", type);
 		const providerIcon = type === "github" ? EIcons.Github : EIcons.Google;
 		return getIconName(providerIcon);
 	}, [type, getIconName]);

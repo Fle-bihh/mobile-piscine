@@ -7,8 +7,34 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme.hook";
+import { ServicesProvider } from "@/contexts/services.context";
+import { AuthProvider, useAuthContext } from "@/contexts/auth.context";
+import { ThemedView } from "@/components/themed/ThemedView.component";
+import { ThemedText } from "@/components/themed/ThemedText.component";
+import { SafeAreaView } from "react-native";
+import { ThemedSafeAreaView } from "@/components/themed/ThemedSafeAreaView.component";
+import { NotesProvider } from "@/contexts/notes.context";
 
 SplashScreen.preventAutoHideAsync();
+
+const App = () => {
+	const { user } = useAuthContext();
+	return (
+		<ThemedSafeAreaView style={{ flex: 1 }}>
+			<ThemedView>
+				<ThemedText>{`Authentified: ${!!user}${
+					user ? ` | ${user.displayName}` : ""
+				}`}</ThemedText>
+			</ThemedView>
+
+			<Stack>
+				<Stack.Screen name="(entry)" options={{ headerShown: false }} />
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen name="+not-found" />
+			</Stack>
+		</ThemedSafeAreaView>
+	);
+};
 
 export default function RootLayout() {
 	const colorScheme = useColorScheme();
@@ -27,13 +53,15 @@ export default function RootLayout() {
 	}
 
 	return (
-		<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen name="(entry)" options={{ headerShown: false }} />
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="+not-found" />
-			</Stack>
-			<StatusBar style="auto" />
-		</ThemeProvider>
+		<ServicesProvider>
+			<AuthProvider>
+				<NotesProvider>
+					<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+						<StatusBar style="auto" />
+						<App />
+					</ThemeProvider>
+				</NotesProvider>
+			</AuthProvider>
+		</ServicesProvider>
 	);
 }

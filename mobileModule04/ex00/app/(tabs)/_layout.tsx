@@ -1,12 +1,17 @@
-import { Tabs } from "expo-router";
-import React from "react";
+import { Redirect, router, Tabs } from "expo-router";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useThemeColor } from "@/hooks/useThemeColor.hook";
+import { useAuthContext } from "@/contexts/auth.context";
+import routing, { getHrefFromRoute } from "@/functions/Routing.functions";
+import { ERoutes } from "@/constants/Routes.constants";
 
 export default function TabLayout() {
+	const { user } = useAuthContext();
 	const tabBarActiveTintColor = useThemeColor("tabIconSelected");
 	const tabBarInactiveTintColor = useThemeColor("tabIconDefault");
 
+	if (!user) return <Redirect href={getHrefFromRoute(ERoutes.Entry)} />;
 	return (
 		<Tabs
 			screenOptions={{

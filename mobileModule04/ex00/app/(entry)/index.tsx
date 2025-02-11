@@ -5,19 +5,15 @@ import SystemButton from "@/components/buttons/SystemButton.component";
 import routing from "@/functions/Routing.functions";
 import { ERoutes } from "@/constants/Routes.constants";
 
+const TITLE = "Login";
+
 export default function IndexView() {
-	const title = "Login";
-	const authentified = false;
 	function onPress() {
-		if (authentified) {
-			routing.push(ERoutes.Home);
-		} else {
-			routing.push(ERoutes.Login);
-		}
+		routing.push(ERoutes.Login);
 	}
 	return (
 		<ThemedView style={styles.container}>
-			<SystemButton onPress={onPress} title={title} />
+			<SystemButton onPress={onPress} title={TITLE} />
 		</ThemedView>
 	);
 }

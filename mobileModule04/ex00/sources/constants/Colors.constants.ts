@@ -6,6 +6,10 @@ export enum EPalette {
 	White = "#fff",
 	WhiteSecondary = "#ececec",
 	Grey = "grey",
+	Error = "#a6192e",
+	Caution = "#ff9900",
+	Success = "#04b34f",
+	Information = "#0057b8",
 }
 
 export const Colors = {
@@ -16,7 +20,7 @@ export const Colors = {
 		background: EPalette.White,
 		backgroundSecondary: EPalette.WhiteSecondary,
 		tabIconDefault: EPalette.Grey,
-		tabIconSelected: EPalette.Black,
+		tabIconSelected: EPalette.Secondary,
 	},
 	dark: {
 		primary: EPalette.Primary,
@@ -24,7 +28,7 @@ export const Colors = {
 		text: EPalette.White,
 		background: EPalette.Black,
 		backgroundSecondary: EPalette.BlackSecondary,
-		tabIconDefault: EPalette.Secondary,
-		tabIconSelected: EPalette.White,
+		tabIconDefault: EPalette.Grey,
+		tabIconSelected: EPalette.Secondary,
 	},
 };
