@@ -1,5 +1,5 @@
-import * as Google from "expo-auth-session/providers/google";
 import { Env } from "@/constants/Env.constants";
+import * as Google from "expo-auth-session/providers/google";
 import { useMemo } from "react";
 
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
@@ -26,13 +26,13 @@ export function useGoogleAuth() {
 export function useGithubAuth() {
 	const githubClientId =
 		Platform.OS === "web" ? Env.GITHUB_WEB_CLIENT_ID : Env.GITHUB_MOBILE_CLIENT_ID;
-
+	const redirectUri = makeRedirectUri();
 	const githubRequest = useMemo(
 		() => ({
 			config: {
 				clientId: githubClientId,
-				scopes: ["user:email"],
-				redirectUri: makeRedirectUri(),
+				scopes: ["discovery", "user:email"],
+				redirectUri,
 			},
 			discovery: {
 				authorizationEndpoint: "https://github.com/login/oauth/authorize",
@@ -43,10 +43,10 @@ export function useGithubAuth() {
 		[githubClientId]
 	);
 
-	const [_, githubResponse, promptGithubSignIn] = useAuthRequest(
+	const [githubConfig, githubResponse, promptGithubSignIn] = useAuthRequest(
 		githubRequest.config,
 		githubRequest.discovery
 	);
 
-	return { githubResponse, promptGithubSignIn };
+	return { githubResponse, promptGithubSignIn, githubConfig };
 }

@@ -53,6 +53,8 @@ export default function CreateNoteView() {
 			<ThemedScrollView contentContainerStyle={styles.container}>
 				<ThemedText style={styles.title}>Create Note</ThemedText>
 
+				{error && <Error error={error} />}
+
 				<Input title="Title:">
 					<ThemedTextInput
 						value={title}
@@ -94,7 +96,6 @@ export default function CreateNoteView() {
 				</Input>
 
 				<SystemButton title="Save Note" onPress={handleCreateNote} disabled={loading} />
-				{error && <Error error={error} />}
 			</ThemedScrollView>
 		),
 		[title, content, feeling, error, loading]
@@ -110,10 +111,8 @@ export default function CreateNoteView() {
 }
 
 const styles = StyleSheet.create({
-	container: { padding: 20, gap: 16, flex: 1 },
+	container: { padding: 20, gap: 16 },
 	title: { fontSize: 24 },
-	inputContainer: { gap: 5 },
-	label: { fontSize: 16, fontWeight: "500" },
 	input: { borderWidth: 1, padding: 10, borderRadius: 5 },
 	textArea: { height: 100, textAlignVertical: "top" },
 	picker: {},

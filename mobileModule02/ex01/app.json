@@ -3,7 +3,6 @@
 		"name": "medium_weather_app",
 		"slug": "medium_weather_app",
 		"version": "1.0.0",
-		"orientation": "portrait",
 		"icon": "./assets/images/42-porto-logo.png",
 		"scheme": "medium_weather_app",
 		"userInterfaceStyle": "automatic",
@@ -24,6 +23,7 @@
 		},
 		"experiments": {
 			"typedRoutes": true
-		}
+		},
+		"plugins": ["expo-font", "expo-router", "expo-web-browser"]
 	}
 }

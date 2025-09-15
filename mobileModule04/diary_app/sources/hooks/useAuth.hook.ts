@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import { IAuthContext, IUser } from "@/types/Auth.types";
-import { useGoogleAuth, useGithubAuth } from "@/hooks/useOAuth.hook";
-import { useFirebaseAuthState } from "@/hooks/useFirebaseAuthState.hook";
 import { useFirebaseService } from "@/contexts/services.context";
+import { useFirebaseAuthState } from "@/hooks/useFirebaseAuthState.hook";
+import { useGithubAuth, useGoogleAuth } from "@/hooks/useOAuth.hook";
+import { IAuthContext, IUser } from "@/types/Auth.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as WebBrowser from "expo-web-browser";
+import { useCallback, useEffect, useState } from "react";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -15,7 +15,7 @@ export default function useAuth(): IAuthContext {
 	const [error, setError] = useState("");
 
 	const { googleResponse, promptGoogleSignIn } = useGoogleAuth();
-	const { githubResponse, promptGithubSignIn } = useGithubAuth();
+	const { githubResponse, promptGithubSignIn, githubConfig } = useGithubAuth();
 
 	const setUserState = useCallback(async (newUser: IUser | undefined) => {
 		setUser(newUser);
@@ -51,8 +51,10 @@ export default function useAuth(): IAuthContext {
 		const authenticateWithGithub = async () => {
 			try {
 				if (githubResponse?.type === "success") {
+					console.log("Firebase Github signin", githubResponse);
 					const firebaseUser = await firebaseService.signInWithGithub(
-						githubResponse.params.code
+						githubResponse.params.code,
+						githubConfig?.codeVerifier
 					);
 					setUserState(firebaseUser);
 				}
@@ -64,7 +66,7 @@ export default function useAuth(): IAuthContext {
 			}
 		};
 		if (githubResponse) authenticateWithGithub();
-	}, [githubResponse]);
+	}, [githubResponse, githubConfig]);
 
 	const signInWithGoogle = useCallback(() => {
 		setLoading(true);

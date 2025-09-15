@@ -1,11 +1,12 @@
 import { useNotesService } from "@/contexts/services.context";
 import { INote, INoteBase } from "@/types/Notes.types";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 
 export default function useNotes() {
 	const notesService = useNotesService();
 
-	const [notes, setNotes] = useState<INote[]>([]);
+	const [rawNotes, setNotes] = useState<INote[]>([]);
+	const notes = useMemo(() => rawNotes.sort((a, b) => b.date - a.date), [rawNotes]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 

@@ -1,6 +1,6 @@
 import { getWeatherDescription } from "@/functions/weather.functions";
 import { WeatherData } from "@/types/weather.types";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 const CurrentWeather = ({ weather }: { weather: WeatherData | null }) => {
 	if (!weather) return null;
@@ -35,7 +35,7 @@ const TodayWeather = ({ weather }: { weather: WeatherData | null }) => {
 	}, [] as number[]);
 
 	return (
-		<View>
+		<ScrollView>
 			{todayIndexes.map((index) => (
 				<Text
 					key={weather.hourly.time[index]}
@@ -47,7 +47,7 @@ const TodayWeather = ({ weather }: { weather: WeatherData | null }) => {
 					{weather.hourly.windspeed_10m[index]} km/h
 				</Text>
 			))}
-		</View>
+		</ScrollView>
 	);
 };
 
@@ -55,7 +55,7 @@ const WeeklyWeather = ({ weather }: { weather: WeatherData | null }) => {
 	if (!weather) return null;
 
 	return (
-		<>
+		<ScrollView>
 			{weather.daily.time.map((date, index) => (
 				<Text key={date}>
 					{date}: Min {weather.daily.temperature_2m_min[index]}°C, Max{" "}
@@ -63,7 +63,7 @@ const WeeklyWeather = ({ weather }: { weather: WeatherData | null }) => {
 					{getWeatherDescription(weather.daily.weathercode[index])}
 				</Text>
 			))}
-		</>
+		</ScrollView>
 	);
 };
 
