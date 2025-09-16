@@ -61,6 +61,7 @@ export default function CreateNoteView() {
 						value={title}
 						onChangeText={setTitle}
 						placeholder="Enter title"
+						placeholderTextColor={"#888"}
 						style={styles.input}
 					/>
 				</Input>
@@ -72,6 +73,7 @@ export default function CreateNoteView() {
 						placeholder="Enter content"
 						multiline
 						style={[styles.input, styles.textArea]}
+						placeholderTextColor={"#888"}
 					/>
 				</Input>
 
@@ -80,6 +82,7 @@ export default function CreateNoteView() {
 						selectedValue={feeling}
 						onValueChange={(itemValue) => setFeeling(itemValue)}
 						style={styles.picker}
+						prompt="Select your feeling"
 					>
 						<Picker.Item
 							key={"default"}
@@ -121,7 +124,13 @@ const useStyles = () => {
 		label: { fontSize: 16, fontWeight: "500" },
 		input: { borderWidth: 1, padding: 10, borderRadius: 5, borderColor },
 		textArea: { height: 100, textAlignVertical: "top" },
-		picker: {},
+		picker: {
+			color: "white",
+			// backgroundColor: "white",
+			// borderWidth: 1,
+			// borderColor,
+			// borderRadius: 5,
+		},
 	});
 	return styles;
 };

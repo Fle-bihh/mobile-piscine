@@ -28,7 +28,6 @@ export const NetworkProvider: React.FC<{ children: ReactNode }> = ({ children })
 		const currentIsConnected = networkService.isConnected(state);
 		setIsConnected(currentIsConnected);
 		networkService.setIsOnline(currentIsConnected);
-		console.log("Network state changed:", state, "isConnected:", currentIsConnected);
 	}, [state, networkService]);
 
 	return (
