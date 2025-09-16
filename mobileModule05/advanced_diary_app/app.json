@@ -1,0 +1,34 @@
+{
+	"expo": {
+		"name": "advanced_diary_app",
+		"slug": "advanced_diary_app",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./sources/assets/images/icon.png",
+		"scheme": "advanced_diary_app",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.flebiha.advanceddiaryapp",
+			"infoPlist": {
+				"ITSAppUsesNonExemptEncryption": false
+			}
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./sources/assets/images/icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.flebiha.advanceddiaryapp"
+		},
+		"web": {
+			"bundler": "metro",
+			"output": "static",
+			"favicon": "./sources/assets/images/icon.png"
+		},
+		"experiments": {
+			"typedRoutes": true
+		}
+	}
+}

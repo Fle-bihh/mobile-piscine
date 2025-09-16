@@ -1,18 +1,18 @@
 import { Env } from "@/constants/Env.constants";
 import { IUser } from "@/types/Auth.types";
-import { FirebaseApp, FirebaseOptions, initializeApp } from "firebase/app";
-import {
-	getAuth,
-	Auth as FirebaseAuth,
-	GoogleAuthProvider,
-	GithubAuthProvider,
-	signInWithCredential,
-	initializeAuth,
-	getReactNativePersistence,
-	signOut as firebaseSignOut,
-	updateEmail,
-} from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
+import { FirebaseApp, FirebaseOptions, initializeApp } from "firebase/app";
+import * as firebaseAuth from "firebase/auth";
+import {
+	Auth as FirebaseAuth,
+	signOut as firebaseSignOut,
+	getAuth,
+	// getReactNativePersistence,
+	GithubAuthProvider,
+	GoogleAuthProvider,
+	initializeAuth,
+	signInWithCredential,
+} from "firebase/auth";
 import { Platform } from "react-native";
 
 export default class FirebaseService {
@@ -34,6 +34,7 @@ export default class FirebaseService {
 		if (Platform.OS === "web") {
 			this.m_auth = getAuth(this.m_app);
 		} else {
+			const getReactNativePersistence = (firebaseAuth as any).getReactNativePersistence; // Workaround for missing type definition
 			this.m_auth = initializeAuth(this.m_app, {
 				persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 			});
@@ -44,7 +45,7 @@ export default class FirebaseService {
 		return this.m_auth;
 	}
 
-	private async getGithubToken(code: string) {
+	private async getGithubToken(code: string, codeVerifier?: string) {
 		const isWeb = Platform.OS === "web";
 		const clientId = isWeb ? Env.GITHUB_WEB_CLIENT_ID : Env.GITHUB_MOBILE_CLIENT_ID;
 		const clientSecret = isWeb ? Env.GITHUB_WEB_CLIENT_SECRET : Env.GITHUB_MOBILE_CLIENT_SECRET;
@@ -59,6 +60,7 @@ export default class FirebaseService {
 				client_id: clientId,
 				client_secret: clientSecret,
 				code: code,
+				code_verifier: codeVerifier,
 			}),
 		});
 
@@ -78,8 +80,8 @@ export default class FirebaseService {
 		return userCredential.user;
 	}
 
-	async signInWithGithub(code: string): Promise<IUser> {
-		const accessToken = await this.getGithubToken(code);
+	async signInWithGithub(code: string, codeVerifier?: string): Promise<IUser> {
+		const accessToken = await this.getGithubToken(code, codeVerifier);
 
 		if (!accessToken) {
 			throw new Error("GitHub access token is undefined or empty.");

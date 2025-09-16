@@ -1,10 +1,9 @@
 import { StyleSheet } from "react-native";
 const TITLE = "Logout";
 
-import { ThemedText } from "@/components/themed/ThemedText.component";
+import SystemButton from "@/components/buttons/SystemButton.component";
 import { ThemedView } from "@/components/themed/ThemedView.component";
 import { useAuthContext } from "@/contexts/auth.context";
-import SystemButton from "@/components/buttons/SystemButton.component";
 
 export default function CalendarView() {
 	const { logout } = useAuthContext();

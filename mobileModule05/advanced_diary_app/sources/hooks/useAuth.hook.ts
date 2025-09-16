@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import { IAuthContext, IUser } from "@/types/Auth.types";
-import { useGoogleAuth, useGithubAuth } from "@/hooks/useOAuth.hook";
-import { useFirebaseAuthState } from "@/hooks/useFirebaseAuthState.hook";
 import { useFirebaseService } from "@/contexts/services.context";
+import toaster from "@/functions/Toast.functions";
+import { useFirebaseAuthState } from "@/hooks/useFirebaseAuthState.hook";
+import { useGithubAuth, useGoogleAuth } from "@/hooks/useOAuth.hook";
+import { IAuthContext, IUser } from "@/types/Auth.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as WebBrowser from "expo-web-browser";
-import toaster from "@/functions/Toast.functions";
+import { useCallback, useEffect, useState } from "react";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -15,7 +15,7 @@ export default function useAuth(): IAuthContext {
 	const [loading, setLoading] = useState(true);
 
 	const { googleResponse, promptGoogleSignIn } = useGoogleAuth();
-	const { githubResponse, promptGithubSignIn } = useGithubAuth();
+	const { githubResponse, promptGithubSignIn, githubConfig } = useGithubAuth();
 
 	function hookError(err: string) {
 		toaster.error(err);
@@ -61,7 +61,8 @@ export default function useAuth(): IAuthContext {
 			try {
 				if (githubResponse?.type === "success") {
 					const firebaseUser = await firebaseService.signInWithGithub(
-						githubResponse.params.code
+						githubResponse.params.code,
+						githubConfig?.codeVerifier
 					);
 					setUserState(firebaseUser);
 					hookSuccess("Authentified successfully");

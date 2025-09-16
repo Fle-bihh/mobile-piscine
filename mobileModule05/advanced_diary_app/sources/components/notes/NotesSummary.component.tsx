@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
-import React, { useMemo } from "react";
-import { EFeeling, INote } from "@/types/Notes.types";
-import { ThemedView } from "../themed/ThemedView.component";
-import { ThemedText } from "../themed/ThemedText.component";
 import { getFeelingPercentage } from "@/functions/Notes.functions";
-import FeelingIcon from "./FeelingIcon.component";
 import { useThemeColor } from "@/hooks/useThemeColor.hook";
+import { EFeeling, INote } from "@/types/Notes.types";
+import React, { useMemo } from "react";
+import { StyleSheet } from "react-native";
+import { ThemedText } from "../themed/ThemedText.component";
+import { ThemedView } from "../themed/ThemedView.component";
+import FeelingIcon from "./FeelingIcon.component";
 
 interface NotesSummaryProps {
 	notes: INote[];
@@ -23,7 +23,7 @@ export default function NotesSummary({ notes }: NotesSummaryProps) {
 			{feelingsData.map((data) => (
 				<ThemedView key={data[0]} style={styles.line}>
 					<FeelingIcon feeling={data[0]} />
-					<ThemedText>{`${data[1]}%`}</ThemedText>
+					<ThemedText>{`${Math.round(data[1])}%`}</ThemedText>
 				</ThemedView>
 			))}
 		</ThemedView>

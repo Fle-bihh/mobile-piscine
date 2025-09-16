@@ -13,6 +13,7 @@ export interface INoteBase {
 	title: string;
 	feeling: EFeeling;
 	content: string;
+	email?: string;
 }
 
 export interface INote extends INoteBase {

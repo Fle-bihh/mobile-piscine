@@ -1,6 +1,6 @@
 import { useNotesService } from "@/contexts/services.context";
 import { INote, INoteBase } from "@/types/Notes.types";
-import { useState, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 export default function useNotes() {
 	const notesService = useNotesService();

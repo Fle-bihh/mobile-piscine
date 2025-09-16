@@ -6,12 +6,13 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/useColorScheme.hook";
-import { ServicesProvider } from "@/contexts/services.context";
-import { AuthProvider } from "@/contexts/auth.context";
 import { ThemedView } from "@/components/themed/ThemedView.component";
-import { NotesProvider } from "@/contexts/notes.context";
 import { layoutDefaultStyle } from "@/constants/Style.constants";
+import { AuthProvider } from "@/contexts/auth.context";
+import { NetworkProvider } from "@/contexts/network.context";
+import { NotesProvider } from "@/contexts/notes.context";
+import { ServicesProvider } from "@/contexts/services.context";
+import { useColorScheme } from "@/hooks/useColorScheme.hook";
 import { NativeStackNavigationOptions } from "@/types/ExpoRouter.types";
 import ToastManager from "expo-react-native-toastify";
 
@@ -52,14 +53,16 @@ export default function RootLayout() {
 
 	return (
 		<ServicesProvider>
-			<AuthProvider>
-				<NotesProvider>
-					<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-						<StatusBar style="auto" />
-						<App />
-					</ThemeProvider>
-				</NotesProvider>
-			</AuthProvider>
+			<NetworkProvider>
+				<AuthProvider>
+					<NotesProvider>
+						<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+							<StatusBar style="auto" />
+							<App />
+						</ThemeProvider>
+					</NotesProvider>
+				</AuthProvider>
+			</NetworkProvider>
 		</ServicesProvider>
 	);
 }

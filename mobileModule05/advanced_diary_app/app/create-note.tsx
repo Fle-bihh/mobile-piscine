@@ -1,21 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
-import { Keyboard, Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Redirect } from "expo-router";
+import SystemButton from "@/components/buttons/SystemButton.component";
+import { ThemedScrollView } from "@/components/themed/ThemedScrollView.component";
+import { ThemedText } from "@/components/themed/ThemedText.component";
+import { ThemedTextInput } from "@/components/themed/ThemedTextInput.component";
+import Error from "@/components/ui/Error.component";
+import Input from "@/components/ui/Input.component";
+import { FeelingsLabels } from "@/constants/Feelings.constants";
+import { ERoutes } from "@/constants/Routes.constants";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useNotesContext } from "@/contexts/notes.context";
-import { INoteBase, EFeeling } from "@/types/Notes.types";
-import { ThemedText } from "@/components/themed/ThemedText.component";
-import { Picker } from "@react-native-picker/picker";
-import { ThemedTextInput } from "@/components/themed/ThemedTextInput.component";
-import routing, { getHrefFromRoute } from "@/functions/Routing.functions";
-import Error from "@/components/ui/Error.component";
-import SystemButton from "@/components/buttons/SystemButton.component";
-import { ERoutes } from "@/constants/Routes.constants";
-import { FeelingsLabels } from "@/constants/Feelings.constants";
-import Input from "@/components/ui/Input.component";
 import { validateNote } from "@/functions/Notes.functions";
-import { ThemedScrollView } from "@/components/themed/ThemedScrollView.component";
+import routing, { getHrefFromRoute } from "@/functions/Routing.functions";
 import { useThemeColor } from "@/hooks/useThemeColor.hook";
+import { EFeeling, INoteBase } from "@/types/Notes.types";
+import { Picker } from "@react-native-picker/picker";
+import { Redirect } from "expo-router";
+import { useMemo, useState } from "react";
+import { Keyboard, Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
 export default function CreateNoteView() {
 	const { user } = useAuthContext();
@@ -44,6 +44,7 @@ export default function CreateNoteView() {
 			title: title.trim(),
 			feeling,
 			content: content.trim(),
+			...(user.email ? { email: user.email } : {}),
 		};
 
 		await createNote(newNote);

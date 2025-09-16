@@ -68,8 +68,6 @@ export default class FirebaseService {
 
 		if (!data.access_token) {
 			throw new Error(`GitHub token retrieval failed: ${JSON.stringify(data)}`);
-		} else {
-			console.log("Successful token retrieval:", JSON.stringify(data));
 		}
 
 		return data.access_token;

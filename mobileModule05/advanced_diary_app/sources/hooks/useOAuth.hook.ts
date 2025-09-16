@@ -1,5 +1,5 @@
-import * as Google from "expo-auth-session/providers/google";
 import { Env } from "@/constants/Env.constants";
+import * as Google from "expo-auth-session/providers/google";
 import { useMemo } from "react";
 
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
@@ -43,10 +43,10 @@ export function useGithubAuth() {
 		[githubClientId]
 	);
 
-	const [_, githubResponse, promptGithubSignIn] = useAuthRequest(
+	const [githubConfig, githubResponse, promptGithubSignIn] = useAuthRequest(
 		githubRequest.config,
 		githubRequest.discovery
 	);
 
-	return { githubResponse, promptGithubSignIn };
+	return { githubResponse, promptGithubSignIn, githubConfig };
 }

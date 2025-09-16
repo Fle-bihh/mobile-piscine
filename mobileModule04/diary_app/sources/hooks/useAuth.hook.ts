@@ -51,7 +51,6 @@ export default function useAuth(): IAuthContext {
 		const authenticateWithGithub = async () => {
 			try {
 				if (githubResponse?.type === "success") {
-					console.log("Firebase Github signin", githubResponse);
 					const firebaseUser = await firebaseService.signInWithGithub(
 						githubResponse.params.code,
 						githubConfig?.codeVerifier
